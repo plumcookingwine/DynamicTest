@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+    compileOnly fileTree(dir: 'lib', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: '*.jar')
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig{
+
+        // 建议改为自己的 packageName + .droidplugin_stub ，防止跟其它本插件使用者冲突
+        def authorityName = "com.kangf.dynamic.droidplugin_stub"
+        minSdkVersion 14
+        versionCode 1
+        versionName '1.0'
+
+        buildConfigField "String", "AUTHORITY_NAME", "\"${authorityName}\""
+        manifestPlaceholders = [
+            authorityName:"${authorityName}",
+        ]
+    }
+
+}

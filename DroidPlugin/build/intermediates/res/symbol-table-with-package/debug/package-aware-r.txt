@@ -1,0 +1,9 @@
+com.morgoo.droidplugin
+drawable plugin_activity_loading
+drawable plugin_activity_loading_bitmap
+string service_name_plugin_manager_service
+string stub_name_activity
+string stub_name_povider
+string stub_name_service
+style DroidPluginTheme
+style DroidPluginThemeDialog

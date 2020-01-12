@@ -1,0 +1,2 @@
+include ':app', ':plugin', ':DroidPlugin'
+rootProject.name = 'DynamicTest'
