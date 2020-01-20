@@ -1,6 +1,7 @@
-package com.kangf.dynamic
+package com.kangf.dynamic.utils
 
 import android.content.Context
+import dalvik.system.DexClassLoader
 import dalvik.system.PathClassLoader
 import java.lang.reflect.Array
 
@@ -24,16 +25,21 @@ object LoadUtils {
         val hostElements = dexElementsField.get(hostPathList) as kotlin.Array<Any>
 
         // 获取插件的Elements
-        val pluginClassLoader = PathClassLoader("sdcard/plugin-debug.apk", context.classLoader)
+        val pluginClassLoader = DexClassLoader(
+            "sdcard/plugin-debug.apk",
+            context.cacheDir.absolutePath,
+            null,
+            context.classLoader
+        )
         val pluginPathList = pathListField.get(pluginClassLoader)
         val pluginElements = dexElementsField.get(pluginPathList) as kotlin.Array<Any>
 
         // 创建数组
-        val newElements        =
-        Array.newInstance(
-            pluginElements.javaClass.componentType!!,
-            hostElements.size + pluginElements.size
-        ) as kotlin.Array<Any>
+        val newElements =
+            Array.newInstance(
+                pluginElements.javaClass.componentType!!,
+                hostElements.size + pluginElements.size
+            ) as kotlin.Array<Any>
 
         // 给新数组赋值
         // 先用宿主的，再用插件的

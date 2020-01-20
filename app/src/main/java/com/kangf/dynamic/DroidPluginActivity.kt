@@ -1,14 +1,14 @@
 package com.kangf.dynamic
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.morgoo.droidplugin.pm.PluginManager
 import com.morgoo.helper.Log
 import kotlinx.android.synthetic.main.activity_droid_plugin.*
 
-class DroidPluginActivity : AppCompatActivity() {
+class DroidPluginActivity : Activity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -23,7 +23,7 @@ android {
 
         buildConfigField "String", "AUTHORITY_NAME", "\"${authorityName}\""
         manifestPlaceholders = [
-            authorityName:"${authorityName}",
+                authorityName:"${authorityName}",
         ]
     }
 

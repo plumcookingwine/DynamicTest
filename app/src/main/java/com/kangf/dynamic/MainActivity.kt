@@ -1,23 +1,21 @@
 package com.kangf.dynamic
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.kangf.dynamic.utils.HookUtilJava
+import com.kangf.dynamic.utils.LoadUtils
 import dalvik.system.PathClassLoader
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         mBtnLoadApk.setOnClickListener {
             LoadUtils.load(this)
+//            HookUtils.hookAMS()
+            HookUtilJava.hookAms()
+            HookUtilJava.hookHandler()
             Toast.makeText(this, "加载apk完成，现在可以调用apk中的类了", Toast.LENGTH_LONG).show()
         }
 
@@ -69,9 +70,17 @@ class MainActivity : AppCompatActivity() {
      */
     private fun loadApk() {
         try {
+            // 调用插件类
             val clazz = Class.forName("com.kangf.plugin.Test")
             val method = clazz.getMethod("test", Context::class.java)
             method.invoke(clazz.newInstance(), this)
+
+            // 跳转插件 Activity
+            val intent = Intent()
+            intent.component = ComponentName("com.kangf.plugin", "com.kangf.plugin.MainActivity")
+            startActivity(intent)
+
+
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(this, "请先点击加载apk", Toast.LENGTH_LONG).show()

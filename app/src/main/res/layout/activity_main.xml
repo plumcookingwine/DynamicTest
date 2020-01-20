@@ -11,7 +11,8 @@
         android:id="@+id/mTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="droid plugin 测试" />
+        android:text="droid plugin 测试"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/mBtnUseDex"
@@ -37,7 +38,7 @@
         android:id="@+id/mBtnUseApk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="点击使用Apk中的类"
+        android:text="启动apk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
