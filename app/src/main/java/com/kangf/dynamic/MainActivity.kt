@@ -16,6 +16,8 @@ import java.lang.Exception
 
 class MainActivity : Activity() {
 
+    private var isLoad = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,11 +37,16 @@ class MainActivity : Activity() {
         }
 
         mBtnLoadApk.setOnClickListener {
-            LoadUtils.load(this)
+            if (!isLoad) {
+                LoadUtils.load(this)
 //            HookUtils.hookAMS()
-            HookUtilJava.hookAms()
-            HookUtilJava.hookHandler()
-            Toast.makeText(this, "加载apk完成，现在可以调用apk中的类了", Toast.LENGTH_LONG).show()
+                HookUtilJava.hookAms()
+                HookUtilJava.hookHandler()
+                Toast.makeText(this, "加载apk完成", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "已经加载过了，请直接启动apk", Toast.LENGTH_LONG).show()
+            }
+
         }
 
         mBtnUseApk.setOnClickListener {
