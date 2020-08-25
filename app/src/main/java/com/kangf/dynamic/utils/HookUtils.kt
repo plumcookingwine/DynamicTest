@@ -82,7 +82,7 @@ object HookUtils {
 
                         // 执行原来的方法
                         Log.e("kangf", "change args === ${args.size}")
-                        return method.invoke(mInstance, args)
+                        return method.invoke(mInstance, *args)
                     }
 
                 }
