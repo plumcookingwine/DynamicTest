@@ -1,5 +1,6 @@
 package com.kangf.dynamic.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.FileObserver;
@@ -27,11 +28,21 @@ public class HookUtilJava {
 
         try {
             Object singleTon = null;
-            /*
-             * android 26或以上版本的API是一样的
-             */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                /*
+                 * android 29或以上版本的API
+                 */
+                @SuppressLint("PrivateApi")
+                Class<?> activityManagerClass = Class.forName("android.app.ActivityTaskManager");
+                Field iActivityManagerSingletonField = activityManagerClass.getDeclaredField("IActivityTaskManagerSingleton");
+                iActivityManagerSingletonField.setAccessible(true);
+                singleTon = iActivityManagerSingletonField.get(null);
+
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                /*
+                 * android 26或以上版本的API是一样的
+                 */
                 Class<?> activityManagerClass = Class.forName("android.app.ActivityManager");
                 Field iActivityManagerSingletonField = activityManagerClass.getDeclaredField("IActivityManagerSingleton");
                 iActivityManagerSingletonField.setAccessible(true);
@@ -55,7 +66,12 @@ public class HookUtilJava {
             final Object mInstance = mInstanceField.get(singleTon);
 
 
-            Class<?> iActivityManagerClass = Class.forName("android.app.IActivityManager");
+            Class<?> iActivityManagerClass;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                iActivityManagerClass = Class.forName("android.app.IActivityTaskManager");
+            } else {
+                iActivityManagerClass = Class.forName("android.app.IActivityManager");
+            }
 
             Object newInstance = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                     new Class[]{iActivityManagerClass},
