@@ -1,5 +1,5 @@
 [DynamicTest](https://blog.csdn.net/qq_22090073/article/details/103946596)
-### 该demo不能运行在anroid10以上的手机，如果要运行demo， 请先将两个插件文件放入sd卡根目录。
+### 该demo已经支持了android10手机，android11需要自行处理文件分区存储权限，如果要运行demo， 请先将两个插件文件放入sd卡根目录。
 
 # 从零开始实现一个插件化框架（一）
 
